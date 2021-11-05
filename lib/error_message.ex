@@ -1,20 +1,92 @@
 defmodule ErrorMessage do
   @moduledoc """
-  This module has error generation functions, each atom passed into
-  `error_message_defs` is created to the format of `&error_message/2` and
-  `&error_message/3` with the code pre-passed in
+  ErrorMessage
+  ===
 
-  *Note: `error_message_defs` is a gross macro, but I can't think of a
-  better way that doesn't involve `n * 7` lines of code for every code*
+  This library exists to simplify error systems in a code base
+  and allow for a simple unified experience when using and reading
+  error messages around the code base
+
+  This creates one standard, that all errors should fit into the context
+  of HTTP error codes, if they don't `:internal_server_error` should
+  be used and you can use the message and details to provide a further
+  level of depth
 
   ### Example
 
-    error_message_defs(:not_found)
+  ```elixir
+  iex> id = 1
+  iex> ErrorMessage.not_found("no user with id \#{id}", %{user_id: id})
+  %ErrorMessage{
+    code: :not_found,
+    message: "no user with id 1",
+    details: %{user_id: 1}
+  }
 
-  now we can do
+  iex> ErrorMessage.internal_server_error("critical internal error", %{
+  ...>   reason: :massive_issue_with_x
+  ...> })
+  %ErrorMessage{
+    code: :internal_server_error,
+    message: "critical internal error",
+    details: %{reason: :massive_issue_with_x}
+  }
+  ```
 
-    ErrorMessage.not_found("Something Happened?", %{reason: ...})
-    ErrorMessage.not_found("Something Happened?")
+  ## Why is this important
+  If we want to have a good way to catch errors around our system as well as be able to
+  display errors that happen throughout our system, it's useful to have a common error
+  api so we can predict what will come out of a system
+
+  For example if we used elixir through our server, we would be able to catch a not found
+  pretty easily since we can predict the error code coming in without needing to
+  know the message. This leads to more resilliant code since message changes won't break
+  the functionality of your application
+
+  ```elixir
+  # Because our error system is setup with `find_user` we can easily
+  # catch no users and have a solid backup plan
+  with {:error, %ErrorMessage{code: :not_found}} <- find_user(%{name: "bill"}) do
+    create_user(%{name: "bill"})
+  end
+  ```
+
+  ## Usage with Phoenix
+  Another benefit is error rendering to the frontend, because all our errors are part of
+  the HTTP error system, it's quite easy to now return the proper status codes and messages
+  to our frontend clients. For example:
+
+  ```elixir
+  defmodule MyController do
+    def index(conn, param) do
+      case find_thing(params) do
+        {:ok, res} -> json(conn, res)
+        {:error, e} -> json_error(conn, e)
+      end
+    end
+
+    defp json_error(conn, %ErrorMessage{code: code} = e) do
+      conn
+        |> put_status(code) # Plug.Conn
+        |> json(ErrorMessage.to_jsonable_map(e))
+    end
+  end
+  ```
+
+  ## Usage with Logger
+  Ontop of being useful for Phoenix we can also find some good use from this
+  system and Logger, since `ErrorMessage` implements `String.Chars` protocol
+
+  ```elixir
+  case do_thing() do
+    {:ok, value} -> {:ok, do_other_thing(value)}
+    {:error, e} = res ->
+      Logger.error("[MyModule] \#{to_string(e)}")
+
+      res
+  end
+
+  ```
   """
 
   @enforce_keys [:code, :message]
@@ -100,7 +172,17 @@ defmodule ErrorMessage do
     end
   end
 
-  @spec from_struct(error_message :: t) :: t_map
+  @spec to_string(error_message :: t) :: String.t
+  @doc """
+  Converts an `%ErrorMessage{}` struct to a string formatted error message
+
+    ## Example
+
+      iex>
+  """
+  defdelegate to_string(error_message), to: ErrorMessage.Serializer, as: :to_error_string
+
+  @spec to_map(error_message :: t) :: t_map
   @doc """
   Converts an `%ErrorMessage{}` struct to a map and makes sure that the
   contents of the details map can be converted to json
@@ -109,5 +191,23 @@ defmodule ErrorMessage do
 
       iex>
   """
-  defdelegate from_struct(error_message), to: ErrorMessage.Serializer
+  defdelegate to_map(error_message), to: ErrorMessage.Serializer
+
+  @spec inspect(error_message :: t) :: String.t
+  @doc """
+  Converts an `%ErrorMessage{}` struct into an inspectable version
+  """
+  defdelegate inspect(error_message), to: ErrorMessage.Serializer, as: :inspect_error
+
+  defimpl String.Chars do
+    def to_string(%ErrorMessage{} = e) do
+      ErrorMessage.to_string(e)
+    end
+  end
+
+  defimpl Inspect do
+    def inspect(%ErrorMessage{} = e, _) do
+      ErrorMessage.inspect(e)
+    end
+  end
 end
