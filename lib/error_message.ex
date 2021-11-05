@@ -92,7 +92,7 @@ defmodule ErrorMessage do
 
       iex>
   """
-  defdelegate to_string(error_message), to: ErrorMessage.Serializer, as: :to_error_string
+  defdelegate to_string(error_message), to: ErrorMessage.Serializer
 
   @spec to_map(error_message :: t) :: t_map
   @doc """
@@ -109,7 +109,7 @@ defmodule ErrorMessage do
   @doc """
   Converts an `%ErrorMessage{}` struct into an inspectable version
   """
-  defdelegate inspect(error_message), to: ErrorMessage.Serializer, as: :inspect_error
+  defdelegate inspect(error_message), to: ErrorMessage.Serializer
 
   defimpl String.Chars do
     def to_string(%ErrorMessage{} = e) do

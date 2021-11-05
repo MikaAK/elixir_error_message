@@ -1,9 +1,9 @@
 defmodule ErrorMessage.Serializer do
   @moduledoc false
 
-  def inspect_error(%ErrorMessage{code: code, message: message, details: details}) do
+  def inspect(%ErrorMessage{code: code, message: message, details: details}) do
     details = if details !== %{} and details !== [] and not is_nil(details) do
-      "\nDetails: #{inspect details}"
+      "\nDetails: #{Kernel.inspect(details)}"
     else
       ""
     end
@@ -11,8 +11,8 @@ defmodule ErrorMessage.Serializer do
     "#ErrorMessage<code: :#{code}, message: \"#{message}\">#{details}"
   end
 
-  def to_error_string(%ErrorMessage{code: code, message: message, details: details}) do
-    "#{code} - #{message}\nDetails: #{inspect details}"
+  def to_string(%ErrorMessage{code: code, message: message, details: details}) do
+    "#{code} - #{message}\nDetails: #{Kernel.inspect(details)}"
   end
 
   def to_map(%ErrorMessage{code: code, message: message, details: details}) do
@@ -25,7 +25,7 @@ defmodule ErrorMessage.Serializer do
 
   defp ensure_json_serializable(%struct{} = struct_data) do
     %{
-      struct: struct |> to_string |> String.replace("Elixir.", ""),
+      struct: struct |> Kernel.to_string |> String.replace("Elixir.", ""),
       data: struct_data |> Map.from_struct() |> ensure_json_serializable
     }
   end
