@@ -90,24 +90,32 @@ defmodule ErrorMessage do
 
     ## Example
 
-      iex>
+      iex> ErrorMessage.to_string(ErrorMessage.internal_server_error("Something bad happened", %{result: :unknown}))
+      "internal_server_error - Something bad happened\\nDetails: %{result: :unknown}"
   """
   defdelegate to_string(error_message), to: ErrorMessage.Serializer
 
-  @spec to_map(error_message :: t) :: t_map
+  @spec to_jsonable_map(error_message :: t) :: t_map
   @doc """
   Converts an `%ErrorMessage{}` struct to a map and makes sure that the
   contents of the details map can be converted to json
 
     ## Example
 
-      iex>
+      iex> ErrorMessage.to_jsonable_map(ErrorMessage.not_found("couldn't find user", %{user_id: "as21fasdfJ"}))
+      %{code: :not_found, message: "couldn't find user", details: %{user_id: "as21fasdfJ"}}
+
   """
-  defdelegate to_map(error_message), to: ErrorMessage.Serializer
+  defdelegate to_jsonable_map(error_message), to: ErrorMessage.Serializer
 
   @spec inspect(error_message :: t) :: String.t
   @doc """
   Converts an `%ErrorMessage{}` struct into an inspectable version
+
+    ## Example
+
+      iex> ErrorMessage.inspect(ErrorMessage.not_found("couldn't find user", %{user_id: "as21fasdfJ"}))
+      "#ErrorMessage<code: :not_found, message: \\"couldn't find user\\">\\nDetails: %{user_id: \\"as21fasdfJ\\"}"
   """
   defdelegate inspect(error_message), to: ErrorMessage.Serializer
 

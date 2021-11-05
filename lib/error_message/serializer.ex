@@ -15,7 +15,7 @@ defmodule ErrorMessage.Serializer do
     "#{code} - #{message}\nDetails: #{Kernel.inspect(details)}"
   end
 
-  def to_map(%ErrorMessage{code: code, message: message, details: details}) do
+  def to_jsonable_map(%ErrorMessage{code: code, message: message, details: details}) do
     %{code: code, message: message, details: ensure_json_serializable(details)}
   end
 
