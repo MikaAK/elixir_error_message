@@ -24,6 +24,11 @@ defmodule ErrorMessage do
           %ErrorMessage{code: atom, message: String.t()}
           | %ErrorMessage{code: atom, message: String.t(), details: any}
 
+  @type t_map ::
+          %{code: atom, message: String.t()}
+          | %{code: atom, message: String.t(), details: any}
+
+
   @http_error_codes ~w(
     multiple_choices
     moved_permanently
@@ -80,7 +85,11 @@ defmodule ErrorMessage do
     @spec unquote(error_code)(message :: String.t) :: t
     @spec unquote(error_code)(message :: String.t, details :: any) :: t
     @doc """
-    Function to create #{error_code} error message
+    Create #{error_code} error message
+
+    ## Example
+
+      iex>
     """
     def unquote(error_code)(message) do
       %ErrorMessage{code: unquote(error_code), message: message}
@@ -90,4 +99,15 @@ defmodule ErrorMessage do
       %ErrorMessage{code: unquote(error_code), message: message, details: details}
     end
   end
+
+  @spec from_struct(error_message :: t) :: t_map
+  @doc """
+  Converts an `%ErrorMessage{}` struct to a map and makes sure that the
+  contents of the details map can be converted to json
+
+    ## Example
+
+      iex>
+  """
+  defdelegate from_struct(error_message), to: ErrorMessage.Serializer
 end
