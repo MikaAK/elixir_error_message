@@ -29,7 +29,7 @@ Documentation can be found at [https://hexdocs.pm/error_message](https://hexdocs
 
 ```elixir
 iex> id = 1
-iex> ErrorMessage.not_found("no user with id \#{id}", %{user_id: id})
+iex> ErrorMessage.not_found("no user with id #{id}", %{user_id: id})
 %ErrorMessage{
   code: :not_found,
   message: "no user with id 1",
