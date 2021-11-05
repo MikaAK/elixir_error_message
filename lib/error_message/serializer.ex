@@ -23,6 +23,22 @@ defmodule ErrorMessage.Serializer do
     Enum.map(details, &ensure_json_serializable/1)
   end
 
+  defp ensure_json_serializable(%Date{} = date) do
+    Date.to_iso8601(date)
+  end
+
+  defp ensure_json_serializable(%Time{} = time) do
+    Time.to_iso8601(time)
+  end
+
+  defp ensure_json_serializable(%DateTime{} = date_time) do
+    DateTime.to_iso8601(date_time)
+  end
+
+  defp ensure_json_serializable(%NaiveDateTime{} = naive_date_time) do
+    NaiveDateTime.to_iso8601(naive_date_time)
+  end
+
   defp ensure_json_serializable(%struct{} = struct_data) do
     %{
       struct: struct |> Kernel.to_string |> String.replace("Elixir.", ""),

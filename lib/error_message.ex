@@ -105,6 +105,21 @@ defmodule ErrorMessage do
       iex> ErrorMessage.to_jsonable_map(ErrorMessage.not_found("couldn't find user", %{user_id: "as21fasdfJ"}))
       %{code: :not_found, message: "couldn't find user", details: %{user_id: "as21fasdfJ"}}
 
+      iex> error = ErrorMessage.im_a_teapot("teapot", %{
+      ...>   user: %{health: {:alive, 500}},
+      ...>   test: %TestStruct{a: [Date.new!(2020, 1, 10)]}
+      ...> })
+      iex> ErrorMessage.to_jsonable_map(error)
+      %{
+        code: :im_a_teapot,
+        message: "teapot",
+        details: %{
+          user: %{health: [:alive, 500]},
+          test: %{struct: "ErrorMessageTest.TestStruct", data: %{a: ["2020-01-10"]}}
+        }
+      }
+
+
   """
   defdelegate to_jsonable_map(error_message), to: ErrorMessage.Serializer
 
