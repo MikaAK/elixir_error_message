@@ -1,6 +1,9 @@
 ErrorMessage
 ===
 
+[![Test](https://github.com/MikaAK/elixir_error_message/actions/workflows/test-actions.yml/badge.svg)](https://github.com/MikaAK/elixir_error_message/actions/workflows/test-actions.yml)
+[![Hex pm](http://img.shields.io/hexpm/v/error_message.svg?style=flat)](https://hex.pm/packages/error_message)
+
 This library exists to simplify error systems in a code base
 and allow for a simple unified experience when using and reading
 error messages around the code base
