@@ -4,7 +4,7 @@ defmodule ErrorMessage.MixProject do
   def project do
     [
       app: :error_message,
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -31,7 +31,7 @@ defmodule ErrorMessage.MixProject do
     [
       maintainers: ["Mika Kalathil"],
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/MikaAK/error_message"},
+      links: %{"GitHub" => "https://github.com/MikaAK/elixir_error_message"},
       files: ~w(mix.exs README.md CHANGELOG.md lib)
     ]
   end
@@ -39,7 +39,7 @@ defmodule ErrorMessage.MixProject do
   defp docs do
     [
       main: "ErrorMessage",
-      source_url: "https://github.com/MikaAK/error_message",
+      source_url: "https://github.com/MikaAK/elixir_error_message",
     ]
   end
 end
