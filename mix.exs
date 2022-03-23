@@ -21,7 +21,10 @@ defmodule ErrorMessage.MixProject do
   end
 
   defp deps do
-    [{:ex_doc, ">= 0.0.0", only: :dev}]
+    [
+      {:ex_doc, ">= 0.0.0", only: :dev},
+      {:jason, ">= 1.0.0", optional: true}
+    ]
   end
 
   defp package do

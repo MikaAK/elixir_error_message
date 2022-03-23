@@ -1,6 +1,10 @@
 defmodule ErrorMessage do
   @moduledoc "#{File.read!("./README.md")}"
 
+  if Enum.any?(Application.loaded_applications(), fn {dep_name, _, _} -> dep_name === :jason end) do
+    @derive Jason.Encoder
+  end
+
   @enforce_keys [:code, :message]
   defstruct [:code, :message, :details]
 
