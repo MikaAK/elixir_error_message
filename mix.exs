@@ -10,7 +10,9 @@ defmodule ErrorMessage.MixProject do
       deps: deps(),
       description: "Error system to help make errors consistent across your system",
       docs: docs(),
-      package: package()
+      package: package(),
+      preferred_cli_env: [dialyzer: :test],
+      dialyzer: [plt_add_apps: [:jason]]
     ]
   end
 
@@ -23,7 +25,8 @@ defmodule ErrorMessage.MixProject do
   defp deps do
     [
       {:ex_doc, ">= 0.0.0", only: :dev},
-      {:jason, ">= 1.0.0", optional: true}
+      {:jason, ">= 1.0.0", optional: true},
+      {:dialyxir, "~> 1.0", only: :test, runtime: false}
     ]
   end
 
@@ -39,7 +42,7 @@ defmodule ErrorMessage.MixProject do
   defp docs do
     [
       main: "ErrorMessage",
-      source_url: "https://github.com/MikaAK/elixir_error_message",
+      source_url: "https://github.com/MikaAK/elixir_error_message"
     ]
   end
 end
