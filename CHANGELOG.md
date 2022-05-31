@@ -1,3 +1,6 @@
+## 0.1.3
+- Change message typing to String.t
+
 ## 0.1.2
 - Add better typing for specs
 
