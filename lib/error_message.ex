@@ -58,8 +58,8 @@ defmodule ErrorMessage do
               | :not_extended
               | :network_authentication_required
 
-  @type t :: %ErrorMessage{code: code, message: String.t() | map, details: any()}
-  @type t_map :: %{code: code, message: String.t() | map, details: any()}
+  @type t :: %ErrorMessage{code: code, message: String.t(), details: any()}
+  @type t_map :: %{code: code, message: String.t(), details: any()}
 
   @http_error_codes ~w(
     multiple_choices
