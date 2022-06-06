@@ -1,3 +1,6 @@
+## 0.1.4
+- Make details pretty print on inspect 
+
 ## 0.1.3
 - Change message typing to String.t
 

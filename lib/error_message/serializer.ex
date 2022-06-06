@@ -12,7 +12,7 @@ defmodule ErrorMessage.Serializer do
   end
 
   def to_string(%ErrorMessage{code: code, message: message, details: details}) do
-    "#{code} - #{message}\nDetails: #{Kernel.inspect(details)}"
+    "#{code} - #{message}\nDetails: \n#{Kernel.inspect(details, pretty: true)}"
   end
 
   def to_jsonable_map(%ErrorMessage{code: code, message: message, details: details}) do
