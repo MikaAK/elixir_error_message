@@ -3,7 +3,7 @@ defmodule ErrorMessage.Serializer do
 
   def inspect(%ErrorMessage{code: code, message: message, details: details}) do
     details = if details !== %{} and details !== [] and not is_nil(details) do
-      "\nDetails: #{Kernel.inspect(details)}"
+      "\nDetails: \n#{Kernel.inspect(details, pretty: true)}"
     else
       ""
     end
