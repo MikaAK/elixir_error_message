@@ -117,16 +117,26 @@ defmodule ErrorMessage do
     @spec unquote(error_code)(message :: String.t) :: t
     @spec unquote(error_code)(message :: String.t, details :: any) :: t
     @doc """
-    Create #{error_code} error message
+    Create #{error_code} error message for status code #{Plug.Conn.Status.code(error_code)}
 
     ## Example
 
-      iex>
+        iex> ErrorMessage.#{error_code}("error message")
+        %ErrorMessage{code: :#{error_code}, message: "error message"}
     """
     def unquote(error_code)(message) do
       %ErrorMessage{code: unquote(error_code), message: message}
     end
 
+    @doc """
+    Create #{error_code} error message for status code #{Plug.Conn.Status.code(error_code)} with a details item which is
+    passed in as the details key under the `ErrorMessage` struct
+
+    ## Example
+
+        iex> ErrorMessage.#{error_code}("error message", %{item: 1234})
+        %ErrorMessage{code: :#{error_code}, message: "error message", details: %{item: 1234}}
+    """
     def unquote(error_code)(message, details) do
       %ErrorMessage{code: unquote(error_code), message: message, details: details}
     end
@@ -138,8 +148,8 @@ defmodule ErrorMessage do
 
     ## Example
 
-      iex> ErrorMessage.to_string(ErrorMessage.internal_server_error("Something bad happened", %{result: :unknown}))
-      "internal_server_error - Something bad happened\\nDetails: \\n%{result: :unknown}"
+        iex> ErrorMessage.to_string(ErrorMessage.internal_server_error("Something bad happened", %{result: :unknown}))
+        "internal_server_error - Something bad happened\\nDetails: \\n%{result: :unknown}"
   """
   defdelegate to_string(error_message), to: ErrorMessage.Serializer
 
@@ -150,24 +160,22 @@ defmodule ErrorMessage do
 
     ## Example
 
-      iex> ErrorMessage.to_jsonable_map(ErrorMessage.not_found("couldn't find user", %{user_id: "as21fasdfJ"}))
-      %{code: :not_found, message: "couldn't find user", details: %{user_id: "as21fasdfJ"}}
+        iex> ErrorMessage.to_jsonable_map(ErrorMessage.not_found("couldn't find user", %{user_id: "as21fasdfJ"}))
+        %{code: :not_found, message: "couldn't find user", details: %{user_id: "as21fasdfJ"}}
 
-      iex> error = ErrorMessage.im_a_teapot("teapot", %{
-      ...>   user: %{health: {:alive, 500}},
-      ...>   test: %TestStruct{a: [Date.new!(2020, 1, 10)]}
-      ...> })
-      iex> ErrorMessage.to_jsonable_map(error)
-      %{
-        code: :im_a_teapot,
-        message: "teapot",
-        details: %{
-          user: %{health: [:alive, 500]},
-          test: %{struct: "ErrorMessageTest.TestStruct", data: %{a: ["2020-01-10"]}}
+        iex> error = ErrorMessage.im_a_teapot("teapot", %{
+        ...>   user: %{health: {:alive, 500}},
+        ...>   test: %TestStruct{a: [Date.new!(2020, 1, 10)]}
+        ...> })
+        iex> ErrorMessage.to_jsonable_map(error)
+        %{
+          code: :im_a_teapot,
+          message: "teapot",
+          details: %{
+            user: %{health: [:alive, 500]},
+            test: %{struct: "ErrorMessageTest.TestStruct", data: %{a: ["2020-01-10"]}}
+          }
         }
-      }
-
-
   """
   defdelegate to_jsonable_map(error_message), to: ErrorMessage.Serializer
 
@@ -177,8 +185,8 @@ defmodule ErrorMessage do
 
     ## Example
 
-      iex> ErrorMessage.inspect(ErrorMessage.not_found("couldn't find user", %{user_id: "as21fasdfJ"}))
-      "#ErrorMessage<code: :not_found, message: \\"couldn't find user\\">\\nDetails: \\n%{user_id: \\"as21fasdfJ\\"}"
+        iex> ErrorMessage.inspect(ErrorMessage.not_found("couldn't find user", %{user_id: "as21fasdfJ"}))
+        "#ErrorMessage<code: :not_found, message: \\"couldn't find user\\">\\nDetails: \\n%{user_id: \\"as21fasdfJ\\"}"
   """
   defdelegate inspect(error_message), to: ErrorMessage.Serializer
 

@@ -24,9 +24,11 @@ defmodule ErrorMessage.MixProject do
 
   defp deps do
     [
-      {:ex_doc, ">= 0.0.0", only: :dev},
+      {:plug, "~> 1.13", optional: true, runtime: false, only: [:dev, :test]},
       {:jason, ">= 1.0.0", optional: true},
-      {:dialyxir, "~> 1.0", only: :test, runtime: false}
+
+      {:ex_doc, ">= 0.0.0", optional: true, only: :dev},
+      {:dialyxir, "~> 1.0", optional: true, only: :test, runtime: false}
     ]
   end
 
