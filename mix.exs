@@ -24,7 +24,7 @@ defmodule ErrorMessage.MixProject do
 
   defp deps do
     [
-      {:plug, "~> 1.13", optional: true, runtime: false, only: [:dev, :test]},
+      {:plug, "~> 1.13"},
       {:jason, ">= 1.0.0", optional: true},
 
       {:ex_doc, ">= 0.0.0", optional: true, only: :dev},

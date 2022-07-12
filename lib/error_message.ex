@@ -59,7 +59,9 @@ defmodule ErrorMessage do
               | :network_authentication_required
 
   @type t :: %ErrorMessage{code: code, message: String.t(), details: any()}
+  @type t(details) :: %ErrorMessage{code: code, message: String.t(), details: details}
   @type t_map :: %{code: code, message: String.t(), details: any()}
+  @type t_map(details) :: %{code: code, message: String.t(), details: details}
 
   @http_error_codes ~w(
     multiple_choices
@@ -189,6 +191,12 @@ defmodule ErrorMessage do
         "#ErrorMessage<code: :not_found, message: \\"couldn't find user\\">\\nDetails: \\n%{user_id: \\"as21fasdfJ\\"}"
   """
   defdelegate inspect(error_message), to: ErrorMessage.Serializer
+
+  @spec http_code(error_code :: code) :: non_neg_integer()
+  @spec http_code(error_message :: t) :: non_neg_integer()
+  def http_code(%ErrorMessage{code: code}), do: http_code(code)
+
+  defdelegate http_code(error_code), to: Plug.Conn.Status, as: :code
 
   defimpl String.Chars do
     def to_string(%ErrorMessage{} = e) do
