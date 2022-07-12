@@ -139,7 +139,7 @@ defmodule ErrorMessage do
     ## Example
 
       iex> ErrorMessage.to_string(ErrorMessage.internal_server_error("Something bad happened", %{result: :unknown}))
-      "internal_server_error - Something bad happened\\nDetails: %{result: :unknown}"
+      "internal_server_error - Something bad happened\\nDetails: \\n%{result: :unknown}"
   """
   defdelegate to_string(error_message), to: ErrorMessage.Serializer
 
@@ -178,7 +178,7 @@ defmodule ErrorMessage do
     ## Example
 
       iex> ErrorMessage.inspect(ErrorMessage.not_found("couldn't find user", %{user_id: "as21fasdfJ"}))
-      "#ErrorMessage<code: :not_found, message: \\"couldn't find user\\">\\nDetails: %{user_id: \\"as21fasdfJ\\"}"
+      "#ErrorMessage<code: :not_found, message: \\"couldn't find user\\">\\nDetails: \\n%{user_id: \\"as21fasdfJ\\"}"
   """
   defdelegate inspect(error_message), to: ErrorMessage.Serializer
 
