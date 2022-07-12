@@ -1,5 +1,10 @@
+## 0.1.5
+- add `http_code` function
+- add http codes to docs
+- add request_id to jsonable_map when possible
+
 ## 0.1.4
-- Make details pretty print on inspect 
+- Make details pretty print on inspect
 
 ## 0.1.3
 - Change message typing to String.t

@@ -60,8 +60,8 @@ defmodule ErrorMessage do
 
   @type t :: %ErrorMessage{code: code, message: String.t(), details: any()}
   @type t(details) :: %ErrorMessage{code: code, message: String.t(), details: details}
-  @type t_map :: %{code: code, message: String.t(), details: any()}
-  @type t_map(details) :: %{code: code, message: String.t(), details: details}
+  @type t_map :: %{code: code, message: String.t(), details: any(), request_id: String.t()} | %{code: code, message: String.t(), details: any()}
+  @type t_map(details) :: %{code: code, message: String.t(), details: details, request_id: String.t()} | %{code: code, message: String.t(), details: details}
 
   @http_error_codes ~w(
     multiple_choices
