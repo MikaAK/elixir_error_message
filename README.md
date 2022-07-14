@@ -1,7 +1,9 @@
 ErrorMessage
 ===
-
+[![Coverage](https://github.com/MikaAK/elixir_error_message/actions/workflows/coverage.yml/badge.svg)](https://github.com/MikaAK/elixir_error_message/actions/workflows/coverage.yml)
 [![Test](https://github.com/MikaAK/elixir_error_message/actions/workflows/test-actions.yml/badge.svg)](https://github.com/MikaAK/elixir_error_message/actions/workflows/test-actions.yml)
+[![Credo](https://github.com/MikaAK/elixir_error_message/actions/workflows/credo.yml/badge.svg)](https://github.com/MikaAK/elixir_error_message/actions/workflows/credo.yml)
+[![codecov](https://codecov.io/gh/MikaAK/error_message/branch/main/graph/badge.svg?token=RF4ASVG5PV)](https://codecov.io/gh/MikaAK/error_message)
 [![Hex pm](http://img.shields.io/hexpm/v/error_message.svg?style=flat)](https://hex.pm/packages/error_message)
 
 This library exists to simplify error systems in a code base
