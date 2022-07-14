@@ -23,7 +23,7 @@ The package can be installed by adding `error_message` to your list of dependenc
 ```elixir
 def deps do
   [
-    {:error_message, "~> 0.1.0"}
+    {:error_message, "~> 0.2.0"}
   ]
 end
 ```
@@ -91,8 +91,9 @@ defmodule MyController do
   end
 end
 ```
+
 *This will also add a request_id from `Logger.metadata[:request_id]` when found
-```
+
 
 ### Usage with Logger
 Ontop of being useful for Phoenix we can also find some good use from this
