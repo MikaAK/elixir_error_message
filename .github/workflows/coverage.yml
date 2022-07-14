@@ -1,0 +1,42 @@
+name: Coverage
+
+on: push
+
+jobs:
+  Coverage:
+    runs-on: ubuntu-latest
+
+    container:
+      image: mikaak/elixir:1.13-alpine
+      env:
+        MIX_ENV: test
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Rebar & Hex
+        run: mix local.hex --force && mix local.rebar --force
+
+      - name: Install Tar
+        run: apk add --no-cache tar
+
+      - name: Cache Deps & Build
+        uses: actions/cache@v2
+        with:
+          key: ${{github.ref}}-deps-build-cache
+          path: |
+            ./deps
+            ./_build
+            !._build/dev/lib/error_message/
+
+      - name: Install Dependencies
+        run: mix deps.get
+
+      - name: Compile Project
+        run: mix compile
+
+      - name: Run Coveralls
+        run: mix coveralls.json
+
+      - name: Upload to codecov.io
+        uses: codecov/codecov-action@v1
