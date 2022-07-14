@@ -1,4 +1,5 @@
-## 0.1.5
+## 0.2.0
+
 - add `http_code` function
 - add http codes to docs
 - add request_id to jsonable_map when possible
