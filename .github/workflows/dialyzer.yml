@@ -1,9 +1,9 @@
-name: Credo
+name: Dialyzer
 
 on: push
 
 jobs:
-  Credo:
+  Dialyzer:
     runs-on: ubuntu-latest
 
     container:
@@ -23,11 +23,14 @@ jobs:
       - name: Cache Deps & Build
         uses: actions/cache@v2
         with:
-          key: ${{github.ref}}-deps-build-cache
+          key: ${{ runner.os }}-mix-dialyzer-${{ hashFiles('**/mix.lock') }}
           path: |
-            ./deps
-            ./_build
+            deps
+            _build
+            dialyzer
             !._build/dev/lib/error_message/
+          restore-keys: |
+            ${{ runner.os }}-mix-dialyzer-
 
       - name: Install Dependencies
         run: mix deps.get
@@ -36,4 +39,6 @@ jobs:
         run: mix compile
 
       - name: Run Tests
-        run: mix credo
+        run: mix dialyzer
+
+

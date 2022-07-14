@@ -14,6 +14,13 @@ defmodule ErrorMessage.MixProject do
       preferred_cli_env: [dialyzer: :test],
       dialyzer: [plt_add_apps: [:jason]],
       test_coverage: [tool: ExCoveralls],
+      dialyzer: [
+        plt_add_apps: [:ex_unit, :mix, :credo],
+        list_unused_filters: true,
+        plt_local_path: "dialyzer",
+        plt_core_path: "dialyzer",
+        flags: [:unmatched_returns]
+      ],
       preferred_cli_env: [
         coveralls: :test,
         "coveralls.detail": :test,
