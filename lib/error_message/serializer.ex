@@ -1,4 +1,6 @@
 defmodule ErrorMessage.Serializer do
+  require Logger
+
   @moduledoc false
 
   def inspect(%ErrorMessage{code: code, message: message, details: details}) do
@@ -16,7 +18,20 @@ defmodule ErrorMessage.Serializer do
   end
 
   def to_jsonable_map(%ErrorMessage{code: code, message: message, details: details}) do
-    %{code: code, message: message, details: ensure_json_serializable(details)}
+    if Logger.metadata[:request_id] do
+      %{
+        code: code,
+        message: message,
+        request_id: Logger.metadata[:request_id],
+        details: ensure_json_serializable(details)
+      }
+    else
+      %{
+        code: code,
+        message: message,
+        details: ensure_json_serializable(details)
+      }
+    end
   end
 
   defp ensure_json_serializable(details) when is_list(details) do
