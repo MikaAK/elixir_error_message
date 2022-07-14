@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: mikaak/elixir:1.12-alpine
+      image: mikaak/elixir:1.13-alpine
       env:
         MIX_ENV: test
 
