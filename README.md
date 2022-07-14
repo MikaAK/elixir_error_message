@@ -92,7 +92,7 @@ defmodule MyController do
 end
 ```
 
-*This will also add a request_id from `Logger.metadata[:request_id]` when found
+*This will also add a request_id from `Logger.metadata[:request_id]` when found*
 
 
 ### Usage with Logger
