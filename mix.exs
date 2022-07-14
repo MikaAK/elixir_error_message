@@ -12,7 +12,14 @@ defmodule ErrorMessage.MixProject do
       docs: docs(),
       package: package(),
       preferred_cli_env: [dialyzer: :test],
-      dialyzer: [plt_add_apps: [:jason]]
+      dialyzer: [plt_add_apps: [:jason]],
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ]
     ]
   end
 
@@ -27,6 +34,10 @@ defmodule ErrorMessage.MixProject do
       {:plug, "~> 1.13"},
       {:jason, ">= 1.0.0", optional: true},
 
+      {:credo, "~> 1.6", only: [:test, :dev], runtime: false},
+      {:blitz_credo_checks, "~> 0.1", only: [:test, :dev], runtime: false},
+
+      {:excoveralls, "~> 0.10", only: :test},
       {:ex_doc, ">= 0.0.0", optional: true, only: :dev},
       {:dialyxir, "~> 1.0", optional: true, only: :test, runtime: false}
     ]
