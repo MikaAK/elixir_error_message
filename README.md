@@ -1,7 +1,7 @@
 ErrorMessage
 ===
 [![Coverage](https://github.com/MikaAK/elixir_error_message/actions/workflows/coverage.yml/badge.svg)](https://github.com/MikaAK/elixir_error_message/actions/workflows/coverage.yml)
-[![Test](https://github.com/MikaAK/elixir_error_message/actions/workflows/test-actions.yml/badge.svg)](https://github.com/MikaAK/elixir_error_message/actions/workflows/test-actions.yml)
+[![Test](https://github.com/MikaAK/elixir_error_message/actions/workflows/test.yml/badge.svg)](https://github.com/MikaAK/elixir_error_message/actions/workflows/test.yml)
 [![Dialyzer](https://github.com/MikaAK/elixir_error_message/actions/workflows/dialyzer.yml/badge.svg)](https://github.com/MikaAK/elixir_error_message/actions/workflows/dialyzer.yml)
 [![Credo](https://github.com/MikaAK/elixir_error_message/actions/workflows/credo.yml/badge.svg)](https://github.com/MikaAK/elixir_error_message/actions/workflows/credo.yml)
 [![codecov](https://codecov.io/gh/MikaAK/error_message/branch/main/graph/badge.svg?token=RF4ASVG5PV)](https://codecov.io/gh/MikaAK/error_message)
