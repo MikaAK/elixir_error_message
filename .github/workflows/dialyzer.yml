@@ -38,7 +38,7 @@ jobs:
       - name: Compile Project
         run: mix compile
 
-      - name: Run Tests
+      - name: Run Dialyzer
         run: mix dialyzer
 
 

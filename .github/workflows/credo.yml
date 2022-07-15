@@ -35,5 +35,5 @@ jobs:
       - name: Compile Project
         run: mix compile
 
-      - name: Run Tests
+      - name: Run Credo
         run: mix credo
