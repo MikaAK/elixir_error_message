@@ -1,3 +1,6 @@
+## 0.2.1
+- Add `t_res` types
+
 ## 0.2.0
 
 - add `http_code` function
