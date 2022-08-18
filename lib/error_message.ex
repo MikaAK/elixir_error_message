@@ -67,6 +67,10 @@ defmodule ErrorMessage do
   @type t_map(details) :: %{code: code, message: String.t(), details: details, request_id: String.t()} |
                           %{code: code, message: String.t(), details: details}
 
+  @type t_res :: {:ok, term} | {:error, t}
+  @type t_res(result_type) :: {:ok, result_type} | {:error, t}
+  @type t_res(result_type, details_type) :: {:ok, result_type} | {:error, t(details_type)}
+
   @http_error_codes ~w(
     multiple_choices
     moved_permanently
