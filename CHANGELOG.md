@@ -1,3 +1,6 @@
+## 0.2.2
+- Don't generate details: nil in outputs anymore
+
 ## 0.2.1
 - Add `t_res` types
 
