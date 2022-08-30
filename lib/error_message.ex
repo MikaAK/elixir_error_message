@@ -200,6 +200,9 @@ defmodule ErrorMessage do
   """
   defdelegate inspect(error_message), to: ErrorMessage.Serializer
 
+  @spec http_code_reason_atom(error_code :: non_neg_integer()) :: code
+  defdelegate http_code_reason_atom(error_code), to: Plug.Conn.Status, as: :reason_atom
+
   @spec http_code(error_code :: code) :: non_neg_integer()
   @spec http_code(error_message :: t) :: non_neg_integer()
   def http_code(%ErrorMessage{code: code}), do: http_code(code)

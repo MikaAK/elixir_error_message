@@ -1,3 +1,6 @@
+## 0.2.3
+- Add `http_code_reason_atom`
+
 ## 0.2.2
 - Don't generate details: nil in outputs anymore
 
