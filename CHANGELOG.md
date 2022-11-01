@@ -1,3 +1,6 @@
+## 0.2.4
+- Add ability to encode PIDs in error messages and pull out their registered name
+
 ## 0.2.3
 - Add `http_code_reason_atom`
 
