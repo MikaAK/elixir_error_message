@@ -39,6 +39,21 @@ defmodule ErrorMessage.Serializer do
     end
   end
 
+  defp ensure_json_serializable(pid) when is_pid(pid) do
+    pid_string = Kernel.inspect(pid)
+
+    case Process.info(pid) do
+      info when is_list(info) ->
+        if info[:registered_name] do
+          "#{pid_string}__#{info[:registered_name]}"
+        else
+          pid_string
+        end
+
+      _ -> pid_string
+    end
+  end
+
   defp ensure_json_serializable(details) when is_list(details) do
     Enum.map(details, &ensure_json_serializable/1)
   end
