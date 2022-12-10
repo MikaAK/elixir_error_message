@@ -124,8 +124,6 @@ defmodule ErrorMessage do
   )a
 
   for error_code <- @http_error_codes do
-    @spec unquote(error_code)(message :: String.t) :: t
-    @spec unquote(error_code)(message :: String.t, details :: any) :: t
     @doc """
     Create #{error_code} error message for status code #{Plug.Conn.Status.code(error_code)}
 
@@ -134,6 +132,8 @@ defmodule ErrorMessage do
         iex> ErrorMessage.#{error_code}("error message")
         %ErrorMessage{code: :#{error_code}, message: "error message"}
     """
+    @spec unquote(error_code)(message :: String.t) :: t
+    @spec unquote(error_code)(message :: String.t, details :: any) :: t
     def unquote(error_code)(message) do
       %ErrorMessage{code: unquote(error_code), message: message}
     end
@@ -152,7 +152,6 @@ defmodule ErrorMessage do
     end
   end
 
-  @spec to_string(error_message :: t) :: String.t
   @doc """
   Converts an `%ErrorMessage{}` struct to a string formatted error message
 
@@ -161,9 +160,9 @@ defmodule ErrorMessage do
         iex> ErrorMessage.to_string(ErrorMessage.internal_server_error("Something bad happened", %{result: :unknown}))
         "internal_server_error - Something bad happened\\nDetails: \\n%{result: :unknown}"
   """
+  @spec to_string(error_message :: t) :: String.t
   defdelegate to_string(error_message), to: ErrorMessage.Serializer
 
-  @spec to_jsonable_map(error_message :: t) :: t_map
   @doc """
   Converts an `%ErrorMessage{}` struct to a map and makes sure that the
   contents of the details map can be converted to json
@@ -187,9 +186,9 @@ defmodule ErrorMessage do
           }
         }
   """
+  @spec to_jsonable_map(error_message :: t) :: t_map
   defdelegate to_jsonable_map(error_message), to: ErrorMessage.Serializer
 
-  @spec http_code_reason_atom(error_code :: non_neg_integer()) :: code
   @doc """
   Returns the http reason as an atom for the http error code
 
@@ -198,10 +197,9 @@ defmodule ErrorMessage do
       iex> ErrorMessage.http_code_reason_atom(500)
       :internal_server_error
   """
+  @spec http_code_reason_atom(error_code :: non_neg_integer()) :: code
   defdelegate http_code_reason_atom(error_code), to: Plug.Conn.Status, as: :reason_atom
 
-  @spec http_code(error_code :: code) :: non_neg_integer()
-  @spec http_code(error_message :: t) :: non_neg_integer()
   @doc """
   Returns the http code for an error message or error code atom
 
@@ -213,6 +211,8 @@ defmodule ErrorMessage do
       iex> ErrorMessage.http_code(ErrorMessage.not_found("some_message"))
       404
   """
+  @spec http_code(error_code :: code) :: non_neg_integer()
+  @spec http_code(error_message :: t) :: non_neg_integer()
   def http_code(%ErrorMessage{code: code}), do: http_code(code)
 
   defdelegate http_code(error_code), to: Plug.Conn.Status, as: :code
