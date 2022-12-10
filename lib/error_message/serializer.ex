@@ -3,23 +3,13 @@ defmodule ErrorMessage.Serializer do
 
   @moduledoc false
 
-  def inspect(%ErrorMessage{code: code, message: message, details: details}) do
-    details = if details === %{} or details === [] or is_nil(details) do
-      ""
-    else
-      "\nDetails: \n#{Kernel.inspect(details, pretty: true)}"
-    end
-
-    "#ErrorMessage<code: :#{code}, message: \"#{message}\">#{details}"
-  end
-
   def to_string(%ErrorMessage{code: code, message: message, details: details})
       when details === [] or is_nil(details) or details === %{} do
     "#{code} - #{message}"
   end
 
   def to_string(%ErrorMessage{code: code, message: message, details: details}) do
-    "#{code} - #{message}\nDetails: \n#{Kernel.inspect(details, pretty: true)}"
+    "#{code} - #{message}\nDetails: \n#{inspect(details, pretty: true)}"
   end
 
   def to_jsonable_map(%ErrorMessage{code: code, message: message, details: details}) do
@@ -40,7 +30,7 @@ defmodule ErrorMessage.Serializer do
   end
 
   defp ensure_json_serializable(pid) when is_pid(pid) do
-    pid_string = Kernel.inspect(pid)
+    pid_string = inspect(pid)
 
     case Process.info(pid) do
       info when is_list(info) ->

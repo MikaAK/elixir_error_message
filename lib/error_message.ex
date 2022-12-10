@@ -189,17 +189,6 @@ defmodule ErrorMessage do
   """
   defdelegate to_jsonable_map(error_message), to: ErrorMessage.Serializer
 
-  @spec inspect(error_message :: t) :: String.t
-  @doc """
-  Converts an `%ErrorMessage{}` struct into an inspectable version
-
-    ## Example
-
-        iex> ErrorMessage.inspect(ErrorMessage.not_found("couldn't find user", %{user_id: "as21fasdfJ"}))
-        "#ErrorMessage<code: :not_found, message: \\"couldn't find user\\">\\nDetails: \\n%{user_id: \\"as21fasdfJ\\"}"
-  """
-  defdelegate inspect(error_message), to: ErrorMessage.Serializer
-
   @spec http_code_reason_atom(error_code :: non_neg_integer()) :: code
   defdelegate http_code_reason_atom(error_code), to: Plug.Conn.Status, as: :reason_atom
 
@@ -212,12 +201,6 @@ defmodule ErrorMessage do
   defimpl String.Chars do
     def to_string(%ErrorMessage{} = e) do
       ErrorMessage.to_string(e)
-    end
-  end
-
-  defimpl Inspect do
-    def inspect(%ErrorMessage{} = e, _) do
-      ErrorMessage.inspect(e)
     end
   end
 end
