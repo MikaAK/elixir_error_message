@@ -28,7 +28,6 @@ jobs:
             deps
             _build
             dialyzer
-            !._build/dev/lib/error_message/
           restore-keys: |
             ${{ runner.os }}-mix-dialyzer-
 

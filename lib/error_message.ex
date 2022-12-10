@@ -190,10 +190,29 @@ defmodule ErrorMessage do
   defdelegate to_jsonable_map(error_message), to: ErrorMessage.Serializer
 
   @spec http_code_reason_atom(error_code :: non_neg_integer()) :: code
+  @doc """
+  Returns the http reason as an atom for the http error code
+
+  ## Example
+
+      iex> ErrorMessage.http_code_reason_atom(500)
+      :internal_server_error
+  """
   defdelegate http_code_reason_atom(error_code), to: Plug.Conn.Status, as: :reason_atom
 
   @spec http_code(error_code :: code) :: non_neg_integer()
   @spec http_code(error_message :: t) :: non_neg_integer()
+  @doc """
+  Returns the http code for an error message or error code atom
+
+  ## Example
+
+      iex> ErrorMessage.http_code(:internal_server_error)
+      500
+
+      iex> ErrorMessage.http_code(ErrorMessage.not_found("some_message"))
+      404
+  """
   def http_code(%ErrorMessage{code: code}), do: http_code(code)
 
   defdelegate http_code(error_code), to: Plug.Conn.Status, as: :code

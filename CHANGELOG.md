@@ -1,3 +1,6 @@
+## 0.3.0
+- Remove the inspect protocol impl so it uses default inspect
+
 ## 0.2.4
 - Add ability to encode PIDs in error messages and pull out their registered name
 
