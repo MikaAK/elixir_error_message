@@ -32,15 +32,14 @@ defmodule ErrorMessage.Serializer do
   defp ensure_json_serializable(pid) when is_pid(pid) do
     pid_string = inspect(pid)
 
-    case Process.info(pid) do
-      info when is_list(info) ->
-        if info[:registered_name] do
-          "#{pid_string}__#{info[:registered_name]}"
-        else
-          pid_string
-        end
-
-      _ -> pid_string
+    if local_pid?(pid) do
+      case Process.info(pid, :registered_name) do
+        nil -> pid_string
+        {:registered_name, []} -> pid_string
+        {:registered_name, registered_name} -> "#{pid_string}__#{registered_name}"
+      end
+    else
+      pid_string
     end
   end
 
@@ -83,5 +82,9 @@ defmodule ErrorMessage.Serializer do
 
   defp ensure_json_serializable(value) do
     value
+  end
+
+  defp local_pid?(pid) do
+    node(pid) === node()
   end
 end
