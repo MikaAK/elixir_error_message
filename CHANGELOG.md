@@ -1,3 +1,6 @@
+## 0.3.1
+- Add ability to serialize non local pids as well
+
 ## 0.3.0
 - Remove the inspect protocol impl so it uses default inspect
 
