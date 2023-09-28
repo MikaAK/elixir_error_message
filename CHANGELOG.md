@@ -1,3 +1,6 @@
+## 0.3.2
+- Add `t_ok_res` type for `:ok | {:error, ErrorMessage.t}`
+
 ## 0.3.1
 - Add ability to serialize non local pids as well
 

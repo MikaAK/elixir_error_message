@@ -71,6 +71,9 @@ defmodule ErrorMessage do
   @type t_res(result_type) :: {:ok, result_type} | {:error, t}
   @type t_res(result_type, details_type) :: {:ok, result_type} | {:error, t(details_type)}
 
+  @type t_ok_res :: :ok | {:error, t}
+  @type t_ok_res(details_type) :: :ok | {:error, t(details_type)}
+
   @http_error_codes ~w(
     multiple_choices
     moved_permanently
