@@ -13,11 +13,11 @@ defmodule ErrorMessage.Serializer do
   end
 
   def to_jsonable_map(%ErrorMessage{code: code, message: message, details: details}) do
-    if Logger.metadata[:request_id] do
+    if Logger.metadata()[:request_id] do
       %{
         code: code,
         message: message,
-        request_id: Logger.metadata[:request_id],
+        request_id: Logger.metadata()[:request_id],
         details: ensure_json_serializable(details)
       }
     else
@@ -65,7 +65,7 @@ defmodule ErrorMessage.Serializer do
 
   defp ensure_json_serializable(%struct{} = struct_data) do
     %{
-      struct: struct |> Kernel.to_string |> String.replace("Elixir.", ""),
+      struct: struct |> Kernel.to_string() |> String.replace("Elixir.", ""),
       data: struct_data |> Map.from_struct() |> ensure_json_serializable
     }
   end
@@ -77,7 +77,19 @@ defmodule ErrorMessage.Serializer do
   end
 
   defp ensure_json_serializable(details) when is_tuple(details) do
-    details |> Tuple.to_list |> ensure_json_serializable
+    details |> Tuple.to_list() |> ensure_json_serializable
+  end
+
+  defp ensure_json_serializable(fun) when is_function(fun) do
+    {:module, module} = :erlang.fun_info(fun, :module)
+    {:name, function_name} = :erlang.fun_info(fun, :name)
+    {:arity, arity} = :erlang.fun_info(fun, :arity)
+
+    %{
+      module: Atom.to_string(module),
+      function: Atom.to_string(function_name),
+      arity: arity
+    }
   end
 
   defp ensure_json_serializable(value) do
