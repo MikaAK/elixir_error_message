@@ -60,8 +60,26 @@ defmodule ErrorMessage.MixProject do
 
   defp docs do
     [
-      main: "ErrorMessage",
-      source_url: "https://github.com/MikaAK/elixir_error_message"
+      main: "overview",
+      source_url: "https://github.com/MikaAK/elixir_error_message",
+      extra_section: "DOCUMENTATION",
+      extras: [
+        "docs/overview.md",
+        "CHANGELOG.md"
+      ],
+      groups_for_extras: [
+        "Guides": [
+          "docs/overview.md",
+        ],
+        "Tutorials": Path.wildcard("docs/tutorials/*.md"),
+        "How-To Guides": Path.wildcard("docs/how-to-guides/*.md"),
+        "Explanation": Path.wildcard("docs/explanation/*.md"),
+        "Reference": Path.wildcard("docs/reference/*.md")
+      ],
+      groups_for_modules: [
+        "Core": [ErrorMessage],
+        "Serialization": [ErrorMessage.Serializer]
+      ]
     ]
   end
 end
