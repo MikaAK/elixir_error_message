@@ -1,3 +1,6 @@
+## 0.3.3
+- Add docs
+
 ## 0.3.2
 - Add `t_ok_res` type for `:ok | {:error, ErrorMessage.t}`
 
