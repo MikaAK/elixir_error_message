@@ -63,7 +63,7 @@ If a request ID is available in the Logger metadata, it will be included:
 
 ### Data Type Handling
 
-The `ErrorMessage.Serializer` module includes the `ensure_json_serializable/1` function, which handles conversion of Elixir-specific data types to JSON-compatible formats:
+The ErrorMessage.Serializer module includes the `ensure_json_serializable/1` function, which handles conversion of Elixir-specific data types to JSON-compatible formats:
 
 | Elixir Type | JSON Representation |
 |-------------|---------------------|

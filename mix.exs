@@ -43,8 +43,8 @@ defmodule ErrorMessage.MixProject do
       {:credo, "~> 1.6", only: [:test, :dev], runtime: false},
       {:blitz_credo_checks, "~> 0.1", only: [:test, :dev], runtime: false},
 
-      {:excoveralls, "~> 0.10", only: :test},
-      {:ex_doc, ">= 0.0.0", optional: true, only: :dev},
+      {:excoveralls, "~> 0.10", only: :test, runtime: false},
+      {:ex_doc, ">= 0.0.0", optional: true, only: :dev, runtime: false},
       {:dialyxir, "~> 1.0", optional: true, only: :test, runtime: false}
     ]
   end
@@ -54,7 +54,7 @@ defmodule ErrorMessage.MixProject do
       maintainers: ["Mika Kalathil"],
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/MikaAK/elixir_error_message"},
-      files: ~w(mix.exs README.md CHANGELOG.md lib)
+      files: ~w(mix.exs README.md CHANGELOG.md lib docs)
     ]
   end
 
@@ -65,20 +65,24 @@ defmodule ErrorMessage.MixProject do
       extra_section: "DOCUMENTATION",
       extras: [
         "docs/overview.md",
+        "docs/how-to-guides/error_handling_patterns.md",
+        "docs/how-to-guides/phoenix_integration.md",
+        "docs/explanation/error_design_principles.md",
+        "docs/explanation/error_handling_in_elixir.md",
+        "docs/reference/api_reference.md",
+        "docs/reference/serialization.md",
+        "docs/tutorials/error_handling_workflow.md",
+        "docs/tutorials/getting_started.md",
         "CHANGELOG.md"
       ],
       groups_for_extras: [
-        "Guides": [
-          "docs/overview.md",
-        ],
-        "Tutorials": Path.wildcard("docs/tutorials/*.md"),
-        "How-To Guides": Path.wildcard("docs/how-to-guides/*.md"),
-        "Explanation": Path.wildcard("docs/explanation/*.md"),
-        "Reference": Path.wildcard("docs/reference/*.md")
+        Tutorials: ~r/docs\/tutorials\/.?/,
+        "HowTo docs": ~r/docs\/how-to-guides\/.?/,
+        Reference: ~r/docs\/reference\/.?/,
+        Explanation: ~r/docs\/explanation\/.?/
       ],
       groups_for_modules: [
-        "Core": [ErrorMessage],
-        "Serialization": [ErrorMessage.Serializer]
+        "Core": [ErrorMessage]
       ]
     ]
   end

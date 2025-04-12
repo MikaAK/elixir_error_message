@@ -118,8 +118,8 @@ end
 
 Now that you understand the basics of ErrorMessage, you can:
 
-- Check out the [How-To Guides](/docs/how-to-guides/) for practical examples
-- Explore the [Explanation](/docs/explanation/) section to understand the design principles
-- Refer to the [API Reference](/api-reference.html) for detailed function documentation
+- Check out the [How-To Guides](https://hexdocs.pm/error_message/how-to-guides.html) for practical examples
+- Explore the [Explanation](https://hexdocs.pm/error_message/explanation.html) section to understand the design principles
+- Refer to the [API Reference](https://hexdocs.pm/error_message/api-reference.html) for detailed function documentation
 
 Congratulations! You've completed the getting started tutorial for ErrorMessage.

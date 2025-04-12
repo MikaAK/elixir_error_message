@@ -12,8 +12,6 @@ ErrorMessage is a library designed to simplify error handling in Elixir applicat
 
 ## Documentation Structure
 
-This documentation follows the [Diátaxis framework](https://diataxis.fr/), which organizes documentation into four distinct types:
-
 1. **Tutorials**: Step-by-step lessons to help you get started with ErrorMessage
 2. **How-To Guides**: Practical guides for solving specific problems
 3. **Explanation**: Conceptual discussions about ErrorMessage's design and principles
