@@ -44,7 +44,7 @@ defmodule ErrorMessage.MixProject do
       {:blitz_credo_checks, "~> 0.1", only: [:test, :dev], runtime: false},
 
       {:excoveralls, "~> 0.10", only: :test, runtime: false},
-      {:ex_doc, ">= 0.0.0", optional: true, only: :dev, runtime: false},
+      {:ex_doc, "~> 0.40.3", optional: true, only: :dev, runtime: false},
       {:dialyxir, "~> 1.0", optional: true, only: :test, runtime: false}
     ]
   end
